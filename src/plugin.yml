@@ -1,3 +1,6 @@
 name: AsciiStuff
+description: An api for creating pixel art in minecraft chat plugins
 main: net.shotbow.asciistuff.AsciiStuff
 version: 1.0
+authors: [MrSnare, Drave]
+website: https://github.com/MrSnare/AsciiStuff
