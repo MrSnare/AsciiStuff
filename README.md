@@ -18,7 +18,7 @@ Create a new AsciiStuff object
 Use the methods to create the art in the chat box
 
 ##Example
-player.sendMessage(asciiStuff.skinLine("RED", "BLACK", "YELLOW", "RED", "RED", "YELLOW", "BLACK", "RED"));
+`player.sendMessage(asciiStuff.skinLine("RED", "BLACK", "YELLOW", "RED", "RED", "YELLOW", "BLACK", "RED"));`
 
 ##Example player faces
 
