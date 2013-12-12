@@ -19,14 +19,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class AsciiStuff extends JavaPlugin{
 
 	public static Logger log;
-	public static BufferedImage SteveFace;
+	public static BufferedImage steveSkin;
 	
 	public void onEnable(){
 		log = this.getLogger();
 		log.info("AsciiStuff enabled!");
 		
 		try {
-			SteveFace = ImageIO.read(new URL("https://s3.amazonaws.com/MinecraftSkins/char.png"));
+			steveSkin = ImageIO.read(new URL("https://s3.amazonaws.com/MinecraftSkins/char.png"));
 		} catch (IOException e) {
 			log.severe("Could not get steve default face");
 			getServer().getPluginManager().disablePlugin(this);
@@ -56,76 +56,35 @@ public class AsciiStuff extends JavaPlugin{
 	
 	public String[] getPlayerFace(String p){
 		BufferedImage face = getSkin(p);
-		return getPlayerFace(face, null);	
-	}
-	
-	public String[] getPlayerFace(String p, String killer){
-		BufferedImage face = getSkin(p);
-		return getPlayerFace(face, killer);
-	}
-	
-	public String[] getPlayerFace(Player p, String killer){
-		BufferedImage face = getSkin(p.getName());
-		return getPlayerFace(face, killer);
-	}
-	
-	public void printPlayerFace(Player p){
-		BufferedImage face = getSkin(p.getName());
-		sendMessageToPlayer(p, face, null);
-	}
-	
-	public void printPlayerFace(Player p, Player killer){
-		String name = killer.getName();
-		BufferedImage face = getSkin(killer.getName());
-		sendMessageToPlayer(p, face, name);
-	}
-	
-	public void printPlayerFace(Player p, String killer){
-		BufferedImage face = getSkin(killer);
-		sendMessageToPlayer(p, face, killer);
+		return getPlayerFace(face);	
 	}
 
 	private BufferedImage getSkin(String name){
-		BufferedImage PlayerFace = null;
+		BufferedImage playerSkin = null;
 		try {
 			if(name.equalsIgnoreCase("steve")){
-				return SteveFace;
+				return steveSkin;
 			}else{
 				URL url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
-				PlayerFace = ImageIO.read(url);
+				playerSkin = ImageIO.read(url);
 			}                        
-			return PlayerFace;
+			return playerSkin;
 		} catch (IOException e) {
-			return SteveFace;
+			return steveSkin;
 		}
 	}
 	
-	private String[] getPlayerFace(BufferedImage face, String killer){
-		String FaceLines[] = {};
+	private String[] getPlayerFace(BufferedImage face){
+		String[] faceLines = new String[8];
 		for(int j = 0; j < 8; j++){
 			String chatString = "";
 			for(int i = 0; i < 8; i++){
 				Color c = new Color(face.getRGB(8 + i, 8 + j));
 				chatString += codeU2592(getChatColorFromColor(c));
 			}
-			if(killer != null && !killer.isEmpty()){
-				if(j == 3){
-					chatString += "     " + ChatColor.DARK_BLUE + "You got killed by";
-				}
-				if(j == 4){
-					chatString += "     " + ChatColor.DARK_RED + killer;				
-				}
-			}
-			FaceLines[j] = chatString;
+			faceLines[j] = chatString;
 		}
-		return FaceLines;
-	}
-	
-	private void sendMessageToPlayer(Player p, BufferedImage face, String killer){
-		p.sendMessage(" "); // Empty line
-		String[] lines = getPlayerFace(face, killer);
-		p.sendMessage(lines);
-		p.sendMessage(" "); // Empty line
+		return faceLines;
 	}
 
 	private ChatColor getChatColorFromColor(Color c){
