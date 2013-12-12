@@ -53,65 +53,57 @@ public class AsciiStuff extends JavaPlugin{
 		return codeU2592(ChatColor.valueOf(colour)) + codeU2592(ChatColor.valueOf(colour1)) + codeU2592(ChatColor.valueOf(colour2)) + codeU2592(ChatColor.valueOf(colour3)) + 
 				codeU2592(ChatColor.valueOf(colour4)) + codeU2592(ChatColor.valueOf(colour5)) + codeU2592(ChatColor.valueOf(colour6)) + codeU2592(ChatColor.valueOf(colour7));
 	}
-
-	public void getPlayerFace(Player p){
-		String name = p.getName();
-		BufferedImage PlayerFace = null;
-		try {
-			URL url;
-			if(name.equalsIgnoreCase("steve")){
-				PlayerFace = SteveFace;
-			}else{
-				url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
-				PlayerFace = ImageIO.read(url);
-			}                        
-			sendMessageToPlayer(p, PlayerFace);
-		} catch (IOException e) {
-			sendMessageToPlayer(p, SteveFace);
-		}
-	}
-
-	public void getPlayerFace(Player p, Player killer){
-		String name = killer.getName();
-		BufferedImage PlayerFace = null;
-		try {
-			URL url;
-			if(name.equalsIgnoreCase("steve")){
-				PlayerFace = SteveFace;
-			}else{
-				url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
-				PlayerFace = ImageIO.read(url);
-			}                        
-			sendMessageToPlayer(p, PlayerFace, name);
-		} catch (IOException e) {
-			sendMessageToPlayer(p, SteveFace);
-		}
-	}
-
-	public void getPlayerFace(Player p, String name){
-		BufferedImage PlayerFace = null;
-		try {
-			URL url;
-			if(name.equalsIgnoreCase("steve")){
-				PlayerFace = SteveFace;
-			}else{
-				url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
-				PlayerFace = ImageIO.read(url);
-			}                        
-			sendMessageToPlayer(p, PlayerFace);
-		} catch (IOException e) {
-			sendMessageToPlayer(p, SteveFace);
-		}
+	
+	public String[] getPlayerFace(String p){
+		BufferedImage face = getSkin(p);
+		return getPlayerFace(face, null);	
 	}
 	
-	private void sendMessageToPlayer(Player p, BufferedImage face){
+	public String[] getPlayerFace(String p, String killer){
+		BufferedImage face = getSkin(p);
+		return getPlayerFace(face, killer);
+	}
+	
+	public String[] getPlayerFace(Player p, String killer){
+		BufferedImage face = getSkin(p.getName());
+		return getPlayerFace(face, killer);
+	}
+	
+	public void printPlayerFace(Player p){
+		BufferedImage face = getSkin(p.getName());
 		sendMessageToPlayer(p, face, null);
 	}
 	
-	private void sendMessageToPlayer(Player p, BufferedImage face, String killer){
-		p.sendMessage(" "); // Empty line
+	public void printPlayerFace(Player p, Player killer){
+		String name = killer.getName();
+		BufferedImage face = getSkin(killer.getName());
+		sendMessageToPlayer(p, face, name);
+	}
+	
+	public void printPlayerFace(Player p, String killer){
+		BufferedImage face = getSkin(killer);
+		sendMessageToPlayer(p, face, killer);
+	}
+
+	private BufferedImage getSkin(String name){
+		BufferedImage PlayerFace = null;
+		try {
+			if(name.equalsIgnoreCase("steve")){
+				return SteveFace;
+			}else{
+				URL url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
+				PlayerFace = ImageIO.read(url);
+			}                        
+			return PlayerFace;
+		} catch (IOException e) {
+			return SteveFace;
+		}
+	}
+	
+	private String[] getPlayerFace(BufferedImage face, String killer){
+		String FaceLines[] = {};
 		for(int j = 0; j < 8; j++){
-			String chatString = "    ";
+			String chatString = "";
 			for(int i = 0; i < 8; i++){
 				Color c = new Color(face.getRGB(8 + i, 8 + j));
 				chatString += codeU2592(getChatColorFromColor(c));
@@ -124,8 +116,15 @@ public class AsciiStuff extends JavaPlugin{
 					chatString += "     " + ChatColor.DARK_RED + killer;				
 				}
 			}
-			p.sendMessage(chatString);
+			FaceLines[j] = chatString;
 		}
+		return FaceLines;
+	}
+	
+	private void sendMessageToPlayer(Player p, BufferedImage face, String killer){
+		p.sendMessage(" "); // Empty line
+		String[] lines = getPlayerFace(face, killer);
+		p.sendMessage(lines);
 		p.sendMessage(" "); // Empty line
 	}
 

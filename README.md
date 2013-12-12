@@ -32,7 +32,15 @@ This prints lines to the dead player
 public void onPlayerDeath(PlayerDeathEvent event) {
 	Player p = event.getEntity().getPlayer();
 	if(event.getEntity().getKiller() instanceof Player){
-		asciistuff.getPlayerFace(p, event.getEntity().getKiller());
+		asciistuff.printPlayerFace(p, event.getEntity().getKiller());
 	}
 }
+```
+
+###Other
+
+Get face as a string list
+```java
+String playername = "Herobrine";
+player.sendMessage(asciistuff.getPlayerFace(playername));
 ```
