@@ -26,7 +26,7 @@ public class AsciiStuff extends JavaPlugin{
 		log.info("AsciiStuff enabled!");
 		
 		try {
-			SteveFace = ImageIO.read(new URL("https://minecraft.net/images/char.png"));
+			SteveFace = ImageIO.read(new URL("https://s3.amazonaws.com/MinecraftSkins/char.png"));
 		} catch (IOException e) {
 			log.severe("Could not get steve default face");
 			getServer().getPluginManager().disablePlugin(this);
@@ -60,7 +60,7 @@ public class AsciiStuff extends JavaPlugin{
 		try {
 			URL url;
 			if(name.equalsIgnoreCase("steve")){
-				url = new URL("https://minecraft.net/images/char.png");
+				url = new URL("https://s3.amazonaws.com/MinecraftSkins/char.png");
 			}else{
 				url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
 			}                        
@@ -77,7 +77,7 @@ public class AsciiStuff extends JavaPlugin{
 		try {
 			URL url;
 			if(name.equalsIgnoreCase("steve")){
-				url = new URL("https://minecraft.net/images/char.png");
+				url = new URL("https://s3.amazonaws.com/MinecraftSkins/char.png");
 			}else{
 				url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
 			}                        
@@ -93,7 +93,7 @@ public class AsciiStuff extends JavaPlugin{
 		try {
 			URL url;
 			if(name.equalsIgnoreCase("steve")){
-				url = new URL("https://minecraft.net/images/char.png");
+				url = new URL("https://s3.amazonaws.com/MinecraftSkins/char.png");
 			}else{
 				url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
 			}                        
