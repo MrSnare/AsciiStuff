@@ -60,11 +60,11 @@ public class AsciiStuff extends JavaPlugin{
 		try {
 			URL url;
 			if(name.equalsIgnoreCase("steve")){
-				url = new URL("https://s3.amazonaws.com/MinecraftSkins/char.png");
+				PlayerFace = SteveFace;
 			}else{
 				url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
+				PlayerFace = ImageIO.read(url);
 			}                        
-			PlayerFace = ImageIO.read(url);
 			sendMessageToPlayer(p, PlayerFace);
 		} catch (IOException e) {
 			sendMessageToPlayer(p, SteveFace);
@@ -77,11 +77,11 @@ public class AsciiStuff extends JavaPlugin{
 		try {
 			URL url;
 			if(name.equalsIgnoreCase("steve")){
-				url = new URL("https://s3.amazonaws.com/MinecraftSkins/char.png");
+				PlayerFace = SteveFace;
 			}else{
 				url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
+				PlayerFace = ImageIO.read(url);
 			}                        
-			PlayerFace = ImageIO.read(url);
 			sendMessageToPlayer(p, PlayerFace, name);
 		} catch (IOException e) {
 			sendMessageToPlayer(p, SteveFace);
@@ -93,11 +93,11 @@ public class AsciiStuff extends JavaPlugin{
 		try {
 			URL url;
 			if(name.equalsIgnoreCase("steve")){
-				url = new URL("https://s3.amazonaws.com/MinecraftSkins/char.png");
+				PlayerFace = SteveFace;
 			}else{
 				url = new URL("http://s3.amazonaws.com/MinecraftSkins/" + name + ".png");
+				PlayerFace = ImageIO.read(url);
 			}                        
-			PlayerFace = ImageIO.read(url);
 			sendMessageToPlayer(p, PlayerFace);
 		} catch (IOException e) {
 			sendMessageToPlayer(p, SteveFace);
