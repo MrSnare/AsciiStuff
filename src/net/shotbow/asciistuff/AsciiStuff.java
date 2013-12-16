@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
